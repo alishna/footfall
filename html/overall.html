@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            scroll-behavior: smooth; /* Smooth scrolling */
+        }
+
+        /* Header Styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2f3e75;
+            padding: 20px 40px;
+            color: #fff;
+            position: sticky; /* Sticks to the top of the page */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 8px 15px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #ffcc00;
+            color: #2f3e75;
+            border-color: #fff;
+        }
+
+        /* Sections Styling */
+        section {
+            padding: 60px 80px;
+        }
+
+        section:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2f3e75;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2f3e75;
+            color: #fff;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Foot<span>Fall</span></div>
+        <nav class="nav-buttons">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#reports">Reports</a>
+            <a href="#tracking">Tracking</a>
+        </nav>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard">
+        <h2>Dashboard Overview</h2>
+        <div class="grid">
+            <div class="card">
+                <h2>Footfall Today</h2>
+                <p id="footfall">59</p>
+            </div>
+            <div class="card">
+                <h2>Live Occupancy</h2>
+                <p id="occupancy">66</p>
+            </div>
+            <div class="card">
+                <canvas id="footfallChart"></canvas>
+            </div>
+            <div class="card">
+                <canvas id="genderChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports Section -->
+    <section id="reports">
+        <h2>Reports</h2>
+        <div class="chart-section">
+            <div>
+                <h3>Data of Days - Number of Visitors</h3>
+                <canvas id="doughnutChart"></canvas>
+            </div>
+            <div>
+                <h3>Visitor Data by Gender and Day</h3>
+                <canvas id="stackedBarChart"></canvas>
+            </div>
+            <div>
+                <h3>New Weekly Footfall Trends</h3>
+                <canvas id="newChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section id="tracking">
+        <h2>Tracking</h2>
+        <p>Click on the video to open detailed tracking data.</p>
+        <div style="text-align: center;">
+            <video id="trackingVideo" width="640" height="360" controls style="cursor: pointer;">
+                <source src="/html/peoplecount1.mp4" type="video/mp4">           
+            </video>
+        </div>  
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 FootFall Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Footfall Bar Chart
+        new Chart(document.getElementById('footfallChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                datasets: [{
+                    label: 'Footfall',
+                    data: [2000, 2200, 2500, 2300, 2900],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Gender Doughnut Chart
+        new Chart(document.getElementById('genderChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Male', 'Female'],
+                datasets: [{
+                    data: [60, 40],
+                    backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Doughnut Chart
+        new Chart(document.getElementById('doughnutChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [{
+                    data: [5.4, 2.7, 10.8, 5.4, 5.4, 43.2, 27],
+                    backgroundColor: [
+                        '#88e1f2', '#59b2d0', '#2b84af', '#1c4f82',
+                        '#192f5d', '#6a4c93', '#a88bbc'
+                    ]
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Stacked Bar Chart
+        new Chart(document.getElementById('stackedBarChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [
+                    { label: 'Female', data: [10, 12, 8, 5, 15, 25, 20], backgroundColor: 'rgba(54, 162, 235, 0.8)' },
+                    { label: 'Male', data: [8, 10, 5, 3, 10, 15, 18], backgroundColor: 'rgba(75, 192, 192, 0.8)' }
+                ]
+            },
+            options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true } } }
+        });
+
+        // Line Chart
+        new Chart(document.getElementById('newChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [
+                    { label: 'Male', data: [500, 750, 1200, 1800], borderColor: 'rgba(54, 162, 235, 0.6)', tension: 0.3 },
+                    { label: 'Female', data: [400, 650, 950, 1500], borderColor: 'rgba(255, 99, 132, 0.6)', tension: 0.3 }
+                ]
+            },
+            options: { responsive: true }
+        });
+        const trackingVideo = document.getElementById('trackingVideo');
+        trackingVideo.addEventListener('click', () => {
+        window.location.href = "/tracker"; // Replace with the actual file you want to open
+    });
+    </script>
+</body>
+</html>
